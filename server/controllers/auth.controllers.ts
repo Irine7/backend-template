@@ -1,9 +1,19 @@
 import bcrypt from 'bcryptjs';
+import { Request, Response } from 'express'; //Добавлены типы для req и res с помощью интерфейсов Request и Response из пакета express
 
 import User from '../models/user.model.js';
 import generateTokenAndSetCookie from '../utils/generateToken.js';
 
-export const signup = async (req, res) => {
+interface SignUpRequestBody {
+	fullName: string;
+	userName: string;
+	password: string;
+	confirmPassword: string;
+	gender: string;
+}
+
+// Регистрация
+export const signup = async (req: Request<{}, {}, SignUpRequestBody>, res: Response) => {
 	try {
 		const { fullName, userName, password, confirmPassword, gender } = req.body;
 		if (password !== confirmPassword) {
@@ -38,12 +48,12 @@ export const signup = async (req, res) => {
 			res.status(400).json({ error: 'Invalid user data' });
 		}
 	} catch (error) {
-		console.log('Error in signup controller:', error.message);
+		console.log('Error in signup controller:', (error as Error).message);
 		res.status(500).json({ error: 'Internal server error' });
 	}
 };
 
-export const login = async (req, res) => {
+export const login = async (req: Request<{}, {}, { userName: string; password: string }>, res: Response) => {
 	try {
 		const { userName, password } = req.body;
 		// Проверяем, есть ли пользователь с таким именем в базе данных
@@ -67,18 +77,18 @@ export const login = async (req, res) => {
 			userName: user.userName,
 		});
 	} catch (error) {
-		console.log('Error in login controller:', error.message);
+		console.log('Error in login controller:', (error as Error).message);
 		res.status(500).json({ error: 'Internal server error' });
 	}
 };
 
-export const logout = async (req, res) => {
+export const logout = async (req: Request, res: Response) => {
 	try {
 		// Устанавливает куки с именем jwt в пустое значение и устанавливает его максимальное время жизни (maxAge) в 0 миллисекунд. При установке времени жизни куки в 0, она немедленно удаляется
 		res.cookie('jwt', '', { maxAge: 0 });
 		res.status(200).json({ message: 'Logout successfully done' });
 	} catch (error) {
-		console.log('Error in logout controller:', error.message);
+		console.log('Error in logout controller:', (error as Error).message);
 		res.status(500).json({ error: 'Internal server error' });
 	}
 };

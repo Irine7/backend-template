@@ -20,6 +20,7 @@ app.use(cookieParser());
 // Подключает маршруты аутентификации, которые определены в файле auth.routes.js
 app.use('/api/auth', authRoutes);
 
+
 server.listen(PORT, () => {
 	connectToMongoDB();
 	console.log(`Server listening on port ${PORT}`);

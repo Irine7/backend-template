@@ -1,7 +1,15 @@
 import jwt from 'jsonwebtoken';
+import { Response } from 'express';
+
+type UserId = string;
 
 // Создание токен аутентификации и его установка в cookies ответа (res)
-const generateTokenAndSetCookie = (userId, res) => {
+const generateTokenAndSetCookie = (userId: UserId, res: Response) => {
+	// Проверка, определено ли значение process.env.JWT_SECRET
+	if (!process.env.JWT_SECRET) {
+		throw new Error('JWT_SECRET is not defined');
+	}
+
 	const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
 		expiresIn: '15d', // время жизни токена
 	});

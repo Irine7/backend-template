@@ -5,7 +5,10 @@
 	"type": "module",
 	"description": "Backend Template with server on Express, DB, authentication and JWT token",
 	"scripts": {
-		"server": "cd server && node --watch server.js"
+		"dev": "npx nodemon",
+		"start": "npm run build && node server/index",
+		"build": "rimraf ./build && npx tsc",
+		"server": "cd server && nodemon server.js"
 	},
 	"author": "Irine7",
 	"license": "MIT",
@@ -16,5 +19,16 @@
 		"express": "^4.19.2",
 		"jsonwebtoken": "^9.0.2",
 		"mongoose": "^8.3.1"
+	},
+	"devDependencies": {
+		"@types/bcryptjs": "^2.4.6",
+		"@types/cookie-parser": "^1.4.7",
+		"@types/express": "^4.17.21",
+		"@types/jsonwebtoken": "^9.0.6",
+		"@types/node": "^20.12.7",
+		"nodemon": "^3.1.0",
+		"rimraf": "^5.0.5",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.4.5"
 	}
 }
