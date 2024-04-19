@@ -6,9 +6,9 @@
 	"description": "Backend Template with server on Express, DB, authentication and JWT token",
 	"scripts": {
 		"dev": "npx nodemon",
-		"start": "npm run build && node server/index",
-		"build": "rimraf ./build && npx tsc",
-		"server": "cd server && nodemon server.js"
+		"start": "npm run build && node server/server",
+		"build": "rimraf ./dist && npx tsc && cp server/.env dist",
+		"server": "cd dist && nodemon server.js"
 	},
 	"author": "Irine7",
 	"license": "MIT",
@@ -26,6 +26,7 @@
 		"@types/express": "^4.17.21",
 		"@types/jsonwebtoken": "^9.0.6",
 		"@types/node": "^20.12.7",
+		"cpy-cli": "^5.0.0",
 		"nodemon": "^3.1.0",
 		"rimraf": "^5.0.5",
 		"ts-node": "^10.9.2",
